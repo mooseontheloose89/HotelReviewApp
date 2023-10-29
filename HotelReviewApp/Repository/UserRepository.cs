@@ -25,9 +25,9 @@ namespace HotelReviewApp.Repository
             return _context.Users.Where(u => u.Username == username).FirstOrDefault();
         }
 
-        public string GetUserByEmail(string email)
+        public User GetUserByEmail(string email)
         {
-            return _context.Users.Where(u => u.Email == email).Select(u => u.Username).FirstOrDefault();
+            return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public ICollection<User> GetUsers()
