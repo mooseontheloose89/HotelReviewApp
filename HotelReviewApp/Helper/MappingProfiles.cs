@@ -9,6 +9,8 @@ namespace HotelReviewApp.Helper
         public MappingProfiles() 
         {
             CreateMap<Hotel, HotelDTO>();
+            CreateMap<Review, ReviewDTO>();
+            CreateMap<User, UserDTO>();
         }
     }
 }

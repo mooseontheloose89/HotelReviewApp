@@ -24,13 +24,20 @@ namespace HotelReviewApp.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Hotel>))]
         public IActionResult GetHotels() 
         {
-            var hotels = _mapper.Map<List<HotelDTO>>(_hotelRepository.GetHotels());
-            
-            if (!ModelState.IsValid) 
+            try
             {
-                return BadRequest(ModelState);
+                var hotels = _mapper.Map<List<HotelDTO>>(_hotelRepository.GetHotels());
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                return Ok(hotels);
             }
-            return Ok(hotels);
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
         [HttpGet("{hotelId}")]
@@ -38,15 +45,22 @@ namespace HotelReviewApp.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetHotel(int hotelId) 
         {
-            if (!_hotelRepository.HotelExists(hotelId))
-                return NotFound();
+            try
+            {
+                if (!_hotelRepository.HotelExists(hotelId))
+                    return NotFound();
 
-            var hotel = _mapper.Map<HotelDTO>(_hotelRepository.GetHotel(hotelId));
+                var hotel = _mapper.Map<HotelDTO>(_hotelRepository.GetHotel(hotelId));
 
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            return Ok(hotel);
+                return Ok(hotel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
         [HttpGet("{hotelId}/rating")]
@@ -54,15 +68,22 @@ namespace HotelReviewApp.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetHotelRating(int hotelId) 
         {
-            if (!_hotelRepository.HotelExists(hotelId))
-                return NotFound();
+            try
+            {
+                if (!_hotelRepository.HotelExists(hotelId))
+                    return NotFound();
 
-            var rating = _hotelRepository.GetHotelRating(hotelId);
+                var rating = _hotelRepository.GetHotelRating(hotelId);
 
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            return Ok(rating);
+                return Ok(rating);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
     }
 }
