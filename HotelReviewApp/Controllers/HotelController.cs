@@ -85,5 +85,75 @@ namespace HotelReviewApp.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
+
+        [HttpPost]
+        [ProducesResponseType(201, Type = typeof(HotelDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public IActionResult CreateHotel([FromBody] HotelDTO hotelDto)
+        {
+            try
+            {
+                if (hotelDto == null)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var hotelEntity = _mapper.Map<Hotel>(hotelDto);
+                var createResult = _hotelRepository.CreateHotel(hotelEntity);
+
+                if (!createResult.Success)
+                {
+                    ModelState.AddModelError("", $"Something went wrong saving the hotel: {createResult.ErrorMessage}");
+                    return StatusCode(500, ModelState);
+                }
+
+                var createdHotelDto = _mapper.Map<HotelDTO>(createResult.Data);
+                return CreatedAtAction(nameof(GetHotel), new { hotelId = createdHotelDto.Id }, createdHotelDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        [HttpPut("{Id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public IActionResult UpdateHotel(int Id, [FromBody] Hotel hotel)
+        {
+            try
+            {
+                if (hotel == null || Id != hotel.Id)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!_hotelRepository.HotelExists(Id))
+                {
+                    return NotFound();
+                }
+
+                var updateResult = _hotelRepository.UpdateHotel(_mapper.Map<Hotel>(hotel));
+
+                if (!updateResult.Success)
+                {
+                    ModelState.AddModelError("", $"Something went wrong updating the hotel with id {Id}. Error: {updateResult.ErrorMessage}");
+                    return StatusCode(500, ModelState);
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
     }
 }
