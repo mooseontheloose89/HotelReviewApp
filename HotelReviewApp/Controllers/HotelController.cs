@@ -123,11 +123,11 @@ namespace HotelReviewApp.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult UpdateHotel(int Id, [FromBody] Hotel hotel)
+        public IActionResult UpdateHotel(int Id, [FromBody] HotelDTO hotelDto)
         {
             try
             {
-                if (hotel == null || Id != hotel.Id)
+                if (hotelDto == null || Id != hotelDto.Id || !ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
@@ -136,8 +136,7 @@ namespace HotelReviewApp.Controllers
                 {
                     return NotFound();
                 }
-
-                var updateResult = _hotelRepository.UpdateHotel(_mapper.Map<Hotel>(hotel));
+                var updateResult = _hotelRepository.UpdateHotel(_mapper.Map<Hotel>(hotelDto));
 
                 if (!updateResult.Success)
                 {
@@ -152,6 +151,7 @@ namespace HotelReviewApp.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
 
 
 
