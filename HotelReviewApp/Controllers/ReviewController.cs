@@ -5,6 +5,7 @@ using HotelReviewApp.Models;
 using HotelReviewApp.Repository;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HotelReviewApp.Controllers
@@ -105,6 +106,72 @@ namespace HotelReviewApp.Controllers
                 return StatusCode(500, "Internal server error.");
             }
             
+        }
+
+        [HttpPost]
+        [ProducesResponseType(201, Type = typeof(ReviewDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public IActionResult CreateReview([FromBody] ReviewDTO reviewDto)
+        {
+            try
+            {
+                if (reviewDto == null)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                
+                var reviewEntity = _mapper.Map<Review>(reviewDto);
+                var createResult = _reviewRepository.CreateReview(reviewEntity);
+
+                if (!createResult.Success)
+                {
+                    ModelState.AddModelError("", $"Something went wrong saving the review: {createResult.ErrorMessage}");
+                    return StatusCode(500, ModelState);
+                }
+
+                var createdreviewDto = _mapper.Map<ReviewDTO>(createResult.Data);
+                return CreatedAtAction(nameof(GetReview), new { createdreviewDto.Id }, createdreviewDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{Id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public IActionResult UpdateReview(int Id, [FromBody] ReviewDTO reviewDto)
+        {
+            try
+            {
+                if (reviewDto == null || Id != reviewDto.Id || !ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!_reviewRepository.ReviewExists(Id))
+                {
+                    return NotFound();
+                }
+                var updateResult = _reviewRepository.UpdateReview(_mapper.Map<Review>(reviewDto));
+
+                if (!updateResult.Success)
+                {
+                    ModelState.AddModelError("", $"Something went wrong updating the review with id {Id}. Error: {updateResult.ErrorMessage}");
+                    return StatusCode(500, ModelState);
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using HotelReviewApp.Interfaces;
 using HotelReviewApp.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HotelReviewApp.Controllers
@@ -95,6 +96,20 @@ namespace HotelReviewApp.Controllers
             try
             {
                 if (hotelDto == null)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var hotel = _hotelRepository.GetHotels().Where(h => h.HotelName.Trim()
+                .ToUpper() == hotelDto.HotelName.ToUpper()).FirstOrDefault();
+
+                if (hotel != null)
+                {
+                    ModelState.AddModelError("", "Hotel already exists");
+                    return StatusCode(422, ModelState);
+                }
+
+                if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }

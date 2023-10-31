@@ -7,5 +7,7 @@
         public string Description { get; set; }
         public int Rating { get; set; }
         public DateTime DatePosted { get; set; }
+        public int HotelId { get; set; }
+        public int UserId { get; set; }
     }
 }
