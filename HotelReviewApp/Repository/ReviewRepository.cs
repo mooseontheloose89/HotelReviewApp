@@ -73,8 +73,8 @@ namespace HotelReviewApp.Repository
         {
             try
             {
-                var exisitingReview = _context.Reviews.Find(review.Id);
-                if (exisitingReview == null)
+                var existingReview = _context.Reviews.Find(review.Id);
+                if (existingReview == null)
                 {
                     return new OperationResult<Review>
                     {
@@ -83,17 +83,17 @@ namespace HotelReviewApp.Repository
                     };
                 }
                 
-                exisitingReview.Title = review.Title;
-                exisitingReview.Description = review.Description;
-                exisitingReview.Rating = review.Rating;
-                exisitingReview.DatePosted = DateTime.Now;
+                existingReview.Title = review.Title;
+                existingReview.Description = review.Description;
+                existingReview.Rating = review.Rating;
+                existingReview.DatePosted = DateTime.Now;
 
                 _context.SaveChanges();
 
                 return new OperationResult<Review>
                 {
                     Success = true,
-                    Data = exisitingReview
+                    Data = existingReview
                 };
             }
             catch (Exception ex)

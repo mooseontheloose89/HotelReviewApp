@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using HotelReviewApp.DTO;
 using HotelReviewApp.Interfaces;
 using HotelReviewApp.Models;
@@ -9,8 +10,9 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HotelReviewApp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class HotelController : Controller
     {
         private readonly IHotelRepository _hotelRepository;
@@ -22,6 +24,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Hotel>))]
         public IActionResult GetHotels() 
         {
@@ -42,6 +45,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpGet("{hotelId}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200,Type = typeof(Hotel))]
         [ProducesResponseType(400)]
         public IActionResult GetHotel(int hotelId) 
@@ -65,6 +69,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpGet("{hotelId}/rating")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(decimal))]
         [ProducesResponseType(400)]
         public IActionResult GetHotelRating(int hotelId) 
@@ -88,6 +93,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(201, Type = typeof(HotelDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -134,6 +140,7 @@ namespace HotelReviewApp.Controllers
 
 
         [HttpPut("{Id}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -166,9 +173,5 @@ namespace HotelReviewApp.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
-
-
-
     }
 }

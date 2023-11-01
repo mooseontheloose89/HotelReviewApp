@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using HotelReviewApp.DTO;
 using HotelReviewApp.Interfaces;
 using HotelReviewApp.Models;
@@ -10,8 +11,9 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HotelReviewApp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ReviewController : Controller
     {
         private readonly IReviewRepository _reviewRepository;
@@ -24,6 +26,7 @@ namespace HotelReviewApp.Controllers
 
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDTO>))]
         public IActionResult GetReviews()
         {
@@ -44,6 +47,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpGet("{Id}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(Review))]
         [ProducesResponseType(400)]
         public IActionResult GetReview(int Id)
@@ -67,6 +71,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpGet("review/hotel/{HotelId}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDTO>))]
         [ProducesResponseType(400)]
         public IActionResult GetReviewsByHotelId(int HotelId) 
@@ -88,6 +93,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpGet("review/user/{UserId}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDTO>))]
         [ProducesResponseType(400)]
         public IActionResult GetReviewsByUser(int UserId) 
@@ -109,6 +115,7 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(201, Type = typeof(ReviewDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -141,7 +148,8 @@ namespace HotelReviewApp.Controllers
         }
 
         [HttpPut("{Id}")]
-        [ProducesResponseType(204)]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
