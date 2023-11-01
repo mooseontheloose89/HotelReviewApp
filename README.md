@@ -26,6 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
 ```bash
 git clone https://github.com/mooseontheloose89/HotelReviewApp/.git
 cd hotel-review-app
+```
 2. Restore the .NET packages:
 dotnet restore
 Update the DefaultConnection string in appsettings.json with your SQL Server details.
