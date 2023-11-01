@@ -36,11 +36,11 @@ dotnet restore
 ```
 dotnet run
 ```
-6. Usage
+### Usage
 After running the project, you can access the API through:
 Local: http://localhost:5000/swagger
 
-7. Built With:
+### Built With:
 .NET 6 - The framework used
 Entity Framework Core - ORM used for database management
 AutoMapper - Object-Object mapper
