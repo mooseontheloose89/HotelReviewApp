@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using HotelReviewApp.Controllers;
 using HotelReviewApp.Data;
 using HotelReviewApp.Interfaces;
 using HotelReviewApp.Repository;
@@ -10,7 +11,10 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(HotelController).Assembly)
+    .AddApplicationPart(typeof(ReviewController).Assembly)
+    .AddApplicationPart(typeof(UserController).Assembly);
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -38,17 +42,20 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Hotel Review API", Version = "v1" });
     options.SwaggerDoc("v2", new OpenApiInfo { Title = "Hotel Review API", Version = "v2" });
 
-    options.DocInclusionPredicate((version, apiDesc) =>
+    options.DocInclusionPredicate((docName, apiDesc) =>
     {
         if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
 
-        var versions = methodInfo.DeclaringType
+        var versions = methodInfo.DeclaringType?
             .GetCustomAttributes(true)
             .OfType<ApiVersionAttribute>()
-            .SelectMany(attr => attr.Versions);
+            .SelectMany(attr => attr.Versions)
+            .Select(v => $"v{v.MajorVersion}");
 
-        return versions.Any(v => $"v{v.ToString()}" == version);
+        return versions?.Any(v => v == docName) ?? false;
     });
+
+
 });
 
 var app = builder.Build();
