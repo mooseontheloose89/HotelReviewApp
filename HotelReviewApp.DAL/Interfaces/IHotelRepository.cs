@@ -1,7 +1,7 @@
-﻿using HotelReviewApp.Helper;
-using HotelReviewApp.Models;
+﻿using HotelReviewApp.DAL.Models;
+using HotelReviewApp.Common.Helper;
 
-namespace HotelReviewApp.Interfaces
+namespace HotelReviewApp.DAL.Interfaces
 {
     public interface IHotelRepository
     {

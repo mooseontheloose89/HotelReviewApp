@@ -1,14 +1,14 @@
-﻿using HotelReviewApp.Data;
-using HotelReviewApp.Helper;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Models;
+﻿using HotelReviewApp.DAL.Data;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Models;
+using HotelReviewApp.Common.Helper;
 
-namespace HotelReviewApp.Repository
+namespace HotelReviewApp.DAL.Repository
 {
     public class HotelRepository : IHotelRepository
     {
         private readonly DataContext _context;
-        public HotelRepository(DataContext context) 
+        public HotelRepository(DataContext context)
         {
             _context = context;
 
@@ -28,21 +28,21 @@ namespace HotelReviewApp.Repository
         {
             var review = _context.Reviews.Where(h => h.HotelId == hotelsId);
 
-                if (review.Count() <= 0)
+            if (review.Count() <= 0)
                 return 0;
 
-                return ((decimal)review.Sum(h => h.Rating) / review.Count());
+            return (decimal)review.Sum(h => h.Rating) / review.Count();
 
         }
 
-        public ICollection<Hotel> GetHotels() 
+        public ICollection<Hotel> GetHotels()
         {
-            return _context.Hotels.OrderBy(h  => h.Id).ToList();
+            return _context.Hotels.OrderBy(h => h.Id).ToList();
         }
 
         public bool HotelExists(int hotelsId)
         {
-            return _context.Hotels.Any(h =>  h.Id == hotelsId);
+            return _context.Hotels.Any(h => h.Id == hotelsId);
         }
 
         public OperationResult<Hotel> CreateHotel(Hotel hotel)
@@ -82,7 +82,7 @@ namespace HotelReviewApp.Repository
                     };
                 }
 
-                
+
                 existingHotel.HotelName = hotel.HotelName;
                 existingHotel.Address = hotel.Address;
                 existingHotel.City = hotel.City;

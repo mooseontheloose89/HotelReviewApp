@@ -1,14 +1,14 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using HotelReviewApp.DTO;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Models;
+using HotelReviewApp.Common.DTO;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
-namespace HotelReviewApp.Controllers
+namespace HotelReviewApp.WebApi.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
@@ -26,7 +26,7 @@ namespace HotelReviewApp.Controllers
         [HttpGet]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Hotel>))]
-        public IActionResult GetHotels() 
+        public IActionResult GetHotels()
         {
             try
             {
@@ -46,9 +46,9 @@ namespace HotelReviewApp.Controllers
 
         [HttpGet("{hotelId}")]
         [MapToApiVersion("1.0")]
-        [ProducesResponseType(200,Type = typeof(Hotel))]
+        [ProducesResponseType(200, Type = typeof(Hotel))]
         [ProducesResponseType(400)]
-        public IActionResult GetHotel(int hotelId) 
+        public IActionResult GetHotel(int hotelId)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace HotelReviewApp.Controllers
         [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(decimal))]
         [ProducesResponseType(400)]
-        public IActionResult GetHotelRating(int hotelId) 
+        public IActionResult GetHotelRating(int hotelId)
         {
             try
             {

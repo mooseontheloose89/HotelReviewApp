@@ -1,4 +1,4 @@
-﻿namespace HotelReviewApp.DTO
+﻿namespace HotelReviewApp.Common.DTO
 {
     public class CreateUserDTO
     {

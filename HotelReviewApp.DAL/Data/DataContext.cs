@@ -1,13 +1,13 @@
-﻿using HotelReviewApp.Models;
+﻿using HotelReviewApp.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelReviewApp.Data
+namespace HotelReviewApp.DAL.Data
 {
-    public class DataContext : DbContext 
+    public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-                    
+
         }
 
         public DbSet<Hotel> Hotels { get; set; }

@@ -1,15 +1,16 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using HotelReviewApp.DTO;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Models;
-using HotelReviewApp.Repository;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Models;
+using HotelReviewApp.Common.Helper;
+using HotelReviewApp.DAL.Repository;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using HotelReviewApp.Common.DTO;
 
-namespace HotelReviewApp.Controllers
+namespace HotelReviewApp.WebApi.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
@@ -18,7 +19,7 @@ namespace HotelReviewApp.Controllers
     {
         private readonly IReviewRepository _reviewRepository;
         private readonly IMapper _mapper;
-        public ReviewController(IReviewRepository reviewRepository, IMapper mapper) 
+        public ReviewController(IReviewRepository reviewRepository, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
             _mapper = mapper;
@@ -74,7 +75,7 @@ namespace HotelReviewApp.Controllers
         [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDTO>))]
         [ProducesResponseType(400)]
-        public IActionResult GetReviewsByHotelId(int HotelId) 
+        public IActionResult GetReviewsByHotelId(int HotelId)
         {
             try
             {
@@ -96,7 +97,7 @@ namespace HotelReviewApp.Controllers
         [MapToApiVersion("1.0")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDTO>))]
         [ProducesResponseType(400)]
-        public IActionResult GetReviewsByUser(int UserId) 
+        public IActionResult GetReviewsByUser(int UserId)
         {
             try
             {
@@ -111,7 +112,7 @@ namespace HotelReviewApp.Controllers
             {
                 return StatusCode(500, "Internal server error.");
             }
-            
+
         }
 
         [HttpPost]
@@ -128,7 +129,7 @@ namespace HotelReviewApp.Controllers
                     return BadRequest(ModelState);
                 }
 
-                
+
                 var reviewEntity = _mapper.Map<Review>(reviewDto);
                 var createResult = _reviewRepository.CreateReview(reviewEntity);
 

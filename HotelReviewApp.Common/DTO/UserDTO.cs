@@ -1,6 +1,6 @@
-﻿using HotelReviewApp.Models;
+﻿
 
-namespace HotelReviewApp.DTO
+namespace HotelReviewApp.Common.DTO
 {
     public class UserDTO
     {

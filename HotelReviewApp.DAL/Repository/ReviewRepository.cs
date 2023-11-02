@@ -1,16 +1,16 @@
-﻿using HotelReviewApp.Data;
-using HotelReviewApp.Helper;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Models;
+﻿using HotelReviewApp.DAL.Data;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Models;
+using HotelReviewApp.Common.Helper;
 
-namespace HotelReviewApp.Repository
+namespace HotelReviewApp.DAL.Repository
 {
-    
+
     public class ReviewRepository : IReviewRepository
     {
         private readonly DataContext _context;
 
-        public ReviewRepository(DataContext context) 
+        public ReviewRepository(DataContext context)
         {
             _context = context;
         }
@@ -20,7 +20,7 @@ namespace HotelReviewApp.Repository
             return _context.Reviews.Where(r => r.HotelId == HotelId).ToList();
         }
 
-        public Review GetReview(int id) 
+        public Review GetReview(int id)
         {
             return _context.Reviews.Where(r => r.Id == id).FirstOrDefault();
         }
@@ -35,7 +35,7 @@ namespace HotelReviewApp.Repository
             return _context.Reviews.OrderBy(r => r.HotelId).ToList();
         }
 
-        public ICollection<Review> GetReviewsByUser(int UserId) 
+        public ICollection<Review> GetReviewsByUser(int UserId)
         {
             return _context.Users.Where(u => u.Id == UserId).SelectMany(u => u.Reviews).ToList();
         }
@@ -66,7 +66,7 @@ namespace HotelReviewApp.Repository
                     ErrorMessage = ex.Message,
                 };
             }
-            
+
         }
 
         public OperationResult<Review> UpdateReview(Review review)
@@ -82,7 +82,7 @@ namespace HotelReviewApp.Repository
                         ErrorMessage = "Review with the given ID not found."
                     };
                 }
-                
+
                 existingReview.Title = review.Title;
                 existingReview.Description = review.Description;
                 existingReview.Rating = review.Rating;

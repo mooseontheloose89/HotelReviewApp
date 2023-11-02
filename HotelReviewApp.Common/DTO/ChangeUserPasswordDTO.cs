@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HotelReviewApp.DTO
+namespace HotelReviewApp.Common.DTO
 {
     public class ChangeUserPasswordDTO
     {

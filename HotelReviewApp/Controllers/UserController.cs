@@ -1,16 +1,16 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using HotelReviewApp.DTO;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Models;
-using HotelReviewApp.Repository;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Models;
+using HotelReviewApp.Common.Helper;
 using Microsoft.AspNetCore.Mvc;
+using HotelReviewApp.Common.DTO;
 
-namespace HotelReviewApp.Controllers
+namespace HotelReviewApp.WebApi.Controllers
 {
     [ApiController]
     [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]    
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -74,7 +74,7 @@ namespace HotelReviewApp.Controllers
         public IActionResult GetUser(string username)
         {
             try
-            {         
+            {
                 var user = _mapper.Map<UserDTO>(_userRepository.GetUser(username));
 
                 if (!ModelState.IsValid)
@@ -160,7 +160,7 @@ namespace HotelReviewApp.Controllers
                 {
                     return NotFound();
                 }
-                
+
                 var userToUpdate = _mapper.Map<User>(updateUserDto);
                 userToUpdate.ModifiedDate = DateTime.UtcNow;
 
@@ -201,7 +201,7 @@ namespace HotelReviewApp.Controllers
 
                 if (!_userRepository.VerifyPassword(user, changeUserPasswordDto.CurrentPassword))
 
-                        return BadRequest("Current password is incorrect.");
+                    return BadRequest("Current password is incorrect.");
 
                 if (changeUserPasswordDto.NewPassword != changeUserPasswordDto.ConfirmNewPassword)
                     return BadRequest("New password and confirm password do not match.");
@@ -217,7 +217,7 @@ namespace HotelReviewApp.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}, {ex.StackTrace}");
-            }            
+            }
         }
     }
 }

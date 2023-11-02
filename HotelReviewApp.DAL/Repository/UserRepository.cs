@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
-using HotelReviewApp.Data;
-using HotelReviewApp.DTO;
-using HotelReviewApp.Helper;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Collections.Generic;
+using HotelReviewApp.DAL.Models;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Data;
+using HotelReviewApp.DAL.Repository;
+using HotelReviewApp.Common.Helper;
+using HotelReviewApp.Common.DTO;
 
-namespace HotelReviewApp.Repository
-{    
+
+
+
+namespace HotelReviewApp.DAL.Repository
+{
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
@@ -48,7 +52,7 @@ namespace HotelReviewApp.Repository
             try
             {
                 var userEntity = _mapper.Map<User>(createUserDto);
-                
+
                 userEntity.Password = _passwordHasher.HashPassword(userEntity, userEntity.Password);
 
                 _context.Users.Add(userEntity);
@@ -85,7 +89,7 @@ namespace HotelReviewApp.Repository
                 }
 
                 existingUser.Username = user.Username;
-                
+
                 if (existingUser.Password != user.Password)
                 {
                     existingUser.Password = _passwordHasher.HashPassword(existingUser, user.Password);

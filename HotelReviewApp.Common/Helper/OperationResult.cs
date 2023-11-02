@@ -1,4 +1,4 @@
-﻿namespace HotelReviewApp.Helper
+﻿namespace HotelReviewApp.Common.Helper
 {
     public class OperationResult<T>
     {

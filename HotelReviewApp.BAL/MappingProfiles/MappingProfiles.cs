@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-using HotelReviewApp.DTO;
-using HotelReviewApp.Models;
+using HotelReviewApp.Common.DTO;
+using HotelReviewApp.DAL.Models;
 
-namespace HotelReviewApp.Helper
+namespace HotelReviewApp.BAL.MappingProfiles
 {
     public class MappingProfiles : Profile
     {
-        public MappingProfiles() 
+        public MappingProfiles()
         {
             CreateMap<Hotel, HotelDTO>().ReverseMap();
             CreateMap<Review, ReviewDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<User,CreateUserDTO>().ReverseMap();
+            CreateMap<User, CreateUserDTO>().ReverseMap();
             CreateMap<User, UpdateUserDTO>().ReverseMap();
         }
     }

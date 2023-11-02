@@ -1,15 +1,20 @@
-﻿namespace HotelReviewApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HotelReviewApp.Common.DTO
 {
-    public class Hotel
+    public class HotelDTO
     {
         public int Id { get; set; }
+        [Required]
         public string HotelName { get; set; }
+        [Required]
         public string Address { get; set; }
         public string City { get; set; }
         public string County { get; set; }
+        [RegularExpression(@"^United Kingdom$", ErrorMessage = "The country must be 'United Kingdom'.")]
         public string Country { get; set; }
+
         public int RatingAvg { get; set; }
         public string HotelUrl { get; set; }
-        public ICollection<Review> Reviews { get; set; }
     }
 }

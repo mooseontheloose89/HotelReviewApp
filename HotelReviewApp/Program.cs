@@ -1,9 +1,9 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
-using HotelReviewApp.Controllers;
-using HotelReviewApp.Data;
-using HotelReviewApp.Interfaces;
-using HotelReviewApp.Repository;
+using HotelReviewApp.DAL.Interfaces;
+using HotelReviewApp.DAL.Repository;
+using HotelReviewApp.DAL.Data;
+using HotelReviewApp.WebApi.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
