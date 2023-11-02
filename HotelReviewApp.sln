@@ -9,14 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReviewApp.WebApi", "Ho
 		{547E8C30-A21D-460D-B716-D441F7DF3E19} = {547E8C30-A21D-460D-B716-D441F7DF3E19}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReviewApp.DAL", "HotelReviewApp.DAL\HotelReviewApp.DAL.csproj", "{547E8C30-A21D-460D-B716-D441F7DF3E19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReviewApp.DAL", "HotelReviewApp.DAL\HotelReviewApp.DAL.csproj", "{547E8C30-A21D-460D-B716-D441F7DF3E19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReviewApp.BAL", "HotelReviewApp.BAL\HotelReviewApp.BAL.csproj", "{3D4EA790-0EF4-42B7-988B-4A197A75CED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReviewApp.BAL", "HotelReviewApp.BAL\HotelReviewApp.BAL.csproj", "{3D4EA790-0EF4-42B7-988B-4A197A75CED0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{547E8C30-A21D-460D-B716-D441F7DF3E19} = {547E8C30-A21D-460D-B716-D441F7DF3E19}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReviewApp.Common", "HotelReviewApp.Common\HotelReviewApp.Common.csproj", "{3328E1D2-AC7C-4B5A-9D6E-8E502460CA64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReviewApp.Common", "HotelReviewApp.Common\HotelReviewApp.Common.csproj", "{3328E1D2-AC7C-4B5A-9D6E-8E502460CA64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReviewApp.Blazor.WAA.FrontEnd", "HotelReviewApp.Blazor.WAA.FrontEnd\HotelReviewApp.Blazor.WAA.FrontEnd.csproj", "{ED84E941-ED40-4613-898E-84B17CCF8592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{3328E1D2-AC7C-4B5A-9D6E-8E502460CA64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3328E1D2-AC7C-4B5A-9D6E-8E502460CA64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3328E1D2-AC7C-4B5A-9D6E-8E502460CA64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED84E941-ED40-4613-898E-84B17CCF8592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED84E941-ED40-4613-898E-84B17CCF8592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED84E941-ED40-4613-898E-84B17CCF8592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED84E941-ED40-4613-898E-84B17CCF8592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
